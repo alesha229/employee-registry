@@ -1,12 +1,11 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Dialog, Box, Pagination, Fade } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Employee } from '../../model/types';
+import { Employee } from '@/entities/employee/model/employee';
 import { format } from 'date-fns';
-import { EmployeeCard } from '../EmployeeCard/EmployeeCard';
+import { EmployeeCard } from '@/entities/employee/ui/EmployeeCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../../app/store/store';
-import { setSelectedEmployee } from '../../model/slice';
+import {  setSelectedEmployee, selectSelectedEmployee } from '@/entities/employee/model/employeesSlice';
 
 interface EmployeeListProps {
     employees: Employee[];
@@ -53,7 +52,7 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({
     onPageChange 
 }) => {
     const dispatch = useDispatch();
-    const selectedEmployee = useSelector((state: RootState) => state.employees.selectedEmployee);
+    const selectedEmployee = useSelector(selectSelectedEmployee);
 
     const handleRowClick = (employee: Employee) => {
         dispatch(setSelectedEmployee(employee));

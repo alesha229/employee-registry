@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card, CardContent, Typography, Avatar, Box } from '@mui/material';
+import React, { useMemo } from 'react';
+import { Card, CardContent, Typography, Box, Avatar } from '@mui/material';
+import { Employee } from '@/entities/employee/model/employee';
 import { format } from 'date-fns';
-import { Employee } from '../../model/types';
 
 interface EmployeeCardProps {
     employee: Employee;
@@ -9,19 +9,18 @@ interface EmployeeCardProps {
 }
 
 export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, onClose }) => {
-    const getPhotoSrc = (photo?: string) => {
-        // If no photo is provided, return a default avatar
+    const getPhotoSrc = useMemo(() => (photo?: string) => {
         if (!photo) {
-            return '/path/to/default/avatar.png'; // Replace with your default avatar path
+            return 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
         }
-        // Проверяем, является ли фото URL-адресом
         if (photo.startsWith('http') || photo.startsWith('https')) {
             return photo;
         }
-        // Если это base64, добавляем префикс
-        return `data:image/jpeg;base64,${photo}`;
-    };
-
+        else{
+            return `data:image/jpeg;base64,${photo}`
+        }
+    }, []); // Пустой массив зависимостей, так как функция не зависит от пропсов или состояния
+    
     return (
         <Card sx={{ maxWidth: 345, m: 2 }}>
             <CardContent>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
-import { StoreProvider } from './providers/StoreProvider';
-import { EmployeesPage } from '../pages/EmployeesPage/ui/EmployeesPage';
+import { StoreProvider } from '@/app/providers';
+import { EmployeesPage } from '@/pages/EmployeesPage';
 
 function App() {
     return (

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import employeesReducer from './employeesSlice';
+import employeesReducer from '../../entities/employee/model/employeesSlice';
 
 export const store = configureStore({
     reducer: {

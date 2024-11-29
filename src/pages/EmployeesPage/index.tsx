@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Box } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../app/store/store';
-import { EmployeeList } from '../../../entities/employee/ui/EmployeeList/EmployeeList';
-import { SearchBar } from '../../../features/employeeSearch/ui/SearchBar/SearchBar';
+import { useSelector, useDispatch } from 'react-redux';
+import { EmployeeList } from '@/entities/employee/ui/EmployeeList';
+import { SearchBar } from '@/features/employeeSearch/ui/SearchBar';
+import { selectEmployees, selectSearchQuery, addEmployee } from '@/entities/employee/model/employeesSlice';
+import { mockEmployees } from '@/shared/mock/employees';
 
 export const EmployeesPage: React.FC = () => {
-    const { items, searchQuery } = useSelector((state: RootState) => state.employees);
+    const dispatch = useDispatch();
+    const items = useSelector(selectEmployees);
+    const searchQuery = useSelector(selectSearchQuery);
     const [page, setPage] = useState(1);
     const rowsPerPage = 10;
+
+    useEffect(() => {
+        if (items.length === 0) {
+            mockEmployees.forEach(employee => {
+                dispatch(addEmployee(employee));
+            });
+        }
+    }, [dispatch, items.length]);
 
     const filteredEmployees = items.filter(employee => {
         const fullName = `${employee.lastName} ${employee.firstName} ${employee.patronymic}`.toLowerCase();
